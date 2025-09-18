@@ -6,10 +6,17 @@ pipeline {
                git branch: 'main', url: 'https://github.com/beastguhan/Jenkins-ansible.git'
           }
      }
-      stage (' Run Ansible playbook')  {
-         steps {
-            ansiblePlaybook credentialsId: 'ansible-ssh', disableHostKeyChecking: true, installation: 'ansible2', inventory: 'inventory.ini', playbook: 'playbook.yml', vaultTmpPath: ''
-         }
+      stage('Run Ansible playbook') {
+    steps {
+        ansiblePlaybook(
+            playbook: 'playbook.yml',
+            inventory: 'inventory.ini',
+            credentialsId: 'ansible-ssh',   // use your Jenkins credential ID here
+            hostKeyChecking: false
+        )
+    }
+}
+
       }
    }
 }
